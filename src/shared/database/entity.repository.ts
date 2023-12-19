@@ -5,11 +5,11 @@ export abstract class EntityRepository<T extends Document> {
 
   async findOne(
     filterQuery: FilterQuery<T>,
+    showId?: boolean,
     projection?: Record<string, unknown>,
   ): Promise<T | null> {
     return this.entityModel
       .findOne(filterQuery, {
-        _id: 0,
         __v: 0,
         ...projection,
       })
@@ -22,7 +22,6 @@ export abstract class EntityRepository<T extends Document> {
   ): Promise<T[] | null> {
     return this.entityModel
       .find(filterQuery, {
-        _id: 0,
         __v: 0,
         ...projection,
       })

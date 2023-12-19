@@ -1,10 +1,12 @@
-import { Module } from '@nestjs/common'
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_FILTER } from '@nestjs/core'
 import { MongooseModule } from '@nestjs/mongoose'
 import { ApplicationModule } from './application/application.module'
+import { AuthModule } from './common/auth/auth.module'
+import { EncoderModule } from './common/encoder/encoder.module'
 import { ApiexceptionFilter } from './common/filters/apiexception.filter'
-import { EncoderModule } from './common/encoder/encoder.module';
+import { AppLoggerMiddleware } from './common/middleware/logger.middleware'
 
 @Module({
   imports: [
@@ -16,9 +18,14 @@ import { EncoderModule } from './common/encoder/encoder.module';
       }),
       inject: [ConfigService],
     }),
+    AuthModule,
     ApplicationModule,
     EncoderModule,
   ],
   providers: [{ provide: APP_FILTER, useValue: ApiexceptionFilter }],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(AppLoggerMiddleware).forRoutes('*')
+  }
+}
