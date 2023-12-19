@@ -1,73 +1,62 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Connectopia
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Connectopia is a real-time chat application that allows users to connect with each other, exchange messages, and engage in conversations. Whether for personal or professional use, Connectopia provides a seamless and interactive chatting experience.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- Real-time messaging: Chat with friends and colleagues in real-time.
+- User authentication: Securely log in with your account to access the chat features.
+- Multi-channel chat: Join different channels or create your own for specific topics.
+- Emoji and file support: Express yourself with emojis and share files within the chat.
+- Notifications: Stay informed with real-time notifications for new messages.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Technologies Used
 
-## Installation
+- **Backend:** [Node.js](https://nodejs.org/), [NestJs](https://docs.nestjs.com/), [Socket.IO](https://socket.io/)
+- **Database:** [MongoDB](https://www.mongodb.com/)
+- **Authentication:** [JWT (JSON Web Tokens)](https://jwt.io/)
 
-```bash
-$ npm install
-```
+## Getting Started
 
-## Running the app
+1. Clone the repository:
 
-```bash
-# development
-$ npm run start
+   ```bash
+   git clone https://github.com/peekboo5149/connectopia-server.git
+   ```
 
-# watch mode
-$ npm run start:dev
+2. Install the dependencies:
 
-# production mode
-$ npm run start:prod
-```
+   ```bash
+   cd connectopia
+   yarn install
+   ```
 
-## Test
+3. Configure environment variables: Create a .env file in the root directory and provide the necessary environment variables, including database connection strings, API keys, etc.
+   ```bash
+   HTTP_PORT=3000
+   DEV_HTTP_PORT=
+   NODE_ENV=development
+   HTTPS_PORT=
+   DEV_HTTPS_PORT=
+   MONGO_URI=mongodb://localhost:27017/connectopia
+   JWT_SECRET=your_jwt_secret_key
+   ```
+4. Run the application:
+   ```bash
+   yarn start:dev
+   ```
+   The application will be accessible at http://localhost:3000.
 
-```bash
-# unit tests
-$ npm run test
+### Setting up SSL for development
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+1. To run the server in HTTPS you will need a `private-key.pem` and a `public-certificate.pem`.Note
+   that the names of these must the exact name provided here.
+2. Move these file to a folder `secret`(create if needed) these folder should in the root directory of
+   the application.
+3. Populate the `HTTPS_PORT` or `DEV_HTTPS_PORT` in `.env` file.
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+> Happy chatting on Connectopia!
