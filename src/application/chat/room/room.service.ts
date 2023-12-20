@@ -47,10 +47,32 @@ export class RoomService {
     roomId: string,
     userId: string,
   ) {
-    throw new Error('Not Implemented')
+    const room = await this.findRoomOrThrow(roomId)
+    if (params.opertionType) {
+      return this.deActivateorActivateRoom(roomId, userId, params.opertionType)
+    } else {
+      const isMemberOrOwner =
+        room.members.find((id) => id.toString() === userId) ||
+        room.ownerId.toString() === userId
+
+      if (!isMemberOrOwner) {
+        throw new UnauthorizedException(
+          'Only a owner/member of this room can update',
+        )
+      }
+
+      const updateDoc: Omit<UpdateRoomDto, 'opertionType'> = {
+        name: params.name,
+        description: params.description,
+      }
+      return await this.roomRepository.findOneAndUpdate(
+        { _id: roomId },
+        updateDoc,
+      )
+    }
   }
 
-  public async deActivateorActivateRoom(
+  private async deActivateorActivateRoom(
     roomId: string,
     userId: string,
     opertionType: 'activate' | 'deactivate',
