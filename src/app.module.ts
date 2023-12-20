@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { ApplicationModule } from './application/application.module'
 import { AuthModule } from './common/auth/auth.module'
 import { EncoderModule } from './common/encoder/encoder.module'
-import { ApiexceptionFilter } from './common/filters/apiexception.filter'
+import { ApiExceptionFilter } from './common/filters/apiexception.filter'
 import { AppLoggerMiddleware } from './common/middleware/logger.middleware'
 
 @Module({
@@ -22,7 +22,7 @@ import { AppLoggerMiddleware } from './common/middleware/logger.middleware'
     ApplicationModule,
     EncoderModule,
   ],
-  providers: [{ provide: APP_FILTER, useValue: ApiexceptionFilter }],
+  providers: [{ provide: APP_FILTER, useValue: ApiExceptionFilter }],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): void {
