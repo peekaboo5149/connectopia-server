@@ -11,4 +11,9 @@ export class UserRepository extends EntityRepository<UserDocument> {
   ) {
     super(userModel)
   }
+
+  public async validateUsers(ids: string[]): Promise<boolean> {
+    const users = await this.userModel.find({ _id: { $in: ids } })
+    return ids.length === users.length
+  }
 }

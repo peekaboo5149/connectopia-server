@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   HttpException,
@@ -8,6 +9,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common'
+import { UserRepository } from 'src/common/auth/user/user.repository'
 import { CreateRoomDto } from './dto/create-room.dto'
 import { UpdateRoomDto } from './dto/update-room.dto'
 import { RoomRepository } from './room.repository'
@@ -15,7 +17,10 @@ import { RoomRepository } from './room.repository'
 @Injectable()
 export class RoomService {
   private readonly logger = new Logger(RoomRepository.name, { timestamp: true })
-  constructor(private readonly roomRepository: RoomRepository) {}
+  constructor(
+    private readonly roomRepository: RoomRepository,
+    private readonly userRepository: UserRepository,
+  ) {}
 
   public async findAllRoom() {
     //get all active rooms
@@ -165,10 +170,7 @@ export class RoomService {
     const newUser = [] as string[]
 
     for (const user of users) {
-      if (
-        !existingMember.includes(user) &&
-        room.ownerId.toString() !== userId
-      ) {
+      if (!existingMember.includes(user) && room.ownerId.toString() !== user) {
         newUser.push(user)
       }
     }
@@ -178,6 +180,11 @@ export class RoomService {
         'All Users are already a member of this room',
         HttpStatus.BAD_REQUEST,
       )
+    }
+
+    // validate if the users are correct
+    if (!(await this.userRepository.validateUsers(newUser))) {
+      throw new BadRequestException('Provided invalid user ids')
     }
 
     await this.roomRepository.findOneAndUpdate(
@@ -225,7 +232,7 @@ export class RoomService {
 
     await this.roomRepository.findOneAndUpdate(
       { _id: roomId },
-      { $pull: { members: { $each: newUser } } },
+      { $pull: { members: { $in: newUser } } },
     )
 
     return {

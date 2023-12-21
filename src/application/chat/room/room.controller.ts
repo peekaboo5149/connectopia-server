@@ -65,12 +65,12 @@ export class RoomController {
   public async addOrRemoveUsers(
     @Body() requestBody: MembersDto,
     @Param('roomId') roomId: string,
-    @Query() opertionType: 'add' | 'remove',
+    @Query() opertionType: { opertionType: 'add' | 'remove' },
     @Request() req: any,
   ) {
     const userId = (req['user'] as Payload).sub
 
-    switch (opertionType) {
+    switch (opertionType.opertionType) {
       case 'add':
         return await this.roomService.addUsers(
           roomId,
